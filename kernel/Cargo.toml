@@ -1,0 +1,11 @@
+[package]
+name = "kernel"
+version = "0.1.0"
+edition = "2021"
+forced-target = "x86_64-my_os.json"
+
+[profile.dev]
+panic = "abort"
+
+[profile.release]
+panic = "abort"

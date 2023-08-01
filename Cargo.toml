@@ -1,0 +1,16 @@
+cargo-features = ["per-package-target"]
+[package]
+name = "my-os"
+version = "0.1.0"
+
+[build-dependencies]
+bootloader = "0.11"
+kernel = { path = "kernel", artifact = "bin", target = "x86_64-my_os.json" }
+
+[workspace]
+members = [
+  "kernel"
+]
+
+[dependencies]
+ovmf-prebuilt = "0.1.0-alpha.1"
