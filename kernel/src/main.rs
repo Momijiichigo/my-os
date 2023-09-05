@@ -1,7 +1,7 @@
 #![no_std]
 #![no_main]
 
-use core::{panic::PanicInfo, borrow::BorrowMut};
+use core::panic::PanicInfo;
 use bootloader_api::{BootInfo, entry_point};
 
 
@@ -26,6 +26,7 @@ fn kernel_main(boot_info: &'static mut BootInfo) -> ! {
         }
         logger::init_logger(framebuffer.buffer_mut(), info);
     }
+    log::info!("Hello World!");
     
     loop {}
 }

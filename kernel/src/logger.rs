@@ -1,4 +1,4 @@
-use bootloader_api::info::{FrameBuffer, FrameBufferInfo};
+use bootloader_api::info::FrameBufferInfo;
 
 
 use conquer_once::spin::OnceCell;
