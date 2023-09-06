@@ -19,15 +19,15 @@ fn panic(_info: &PanicInfo) -> ! {
 entry_point!(kernel_main);
 
 fn kernel_main(boot_info: &'static mut BootInfo) -> ! {
-    if let Some(framebuffer) = boot_info.framebuffer.as_mut() {
-        let info = framebuffer.info();
-        for byte in framebuffer.buffer_mut() {
-            *byte = 0x88;
-        }
-        logger::init_logger(framebuffer.buffer_mut(), info);
-    }
+    let framebuffer = boot_info.framebuffer.as_mut().unwrap();
+
+    let info = framebuffer.info().clone();
+    logger::init_logger(framebuffer.buffer_mut(), info);
     log::info!("Hello World!");
     
+    // for byte in framebuffer.buffer_mut() {
+    //     *byte = 0x88;
+    // }
     loop {}
 }
 
