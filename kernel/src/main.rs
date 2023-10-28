@@ -1,6 +1,10 @@
-#![feature(abi_x86_interrupt)]
 #![no_std]
 #![no_main]
+#![feature(abi_x86_interrupt)]
+
+#![feature(custom_test_frameworks)]
+#![test_runner(crate::test_runner)]
+#![reexport_test_harness_main = "test_main"]
 
 use core::panic::PanicInfo;
 use bootloader_api::{BootInfo, entry_point};
@@ -23,7 +27,10 @@ fn init() {
     init_idt();
 }
 
+#[cfg(not(test))]
 entry_point!(kernel_main);
+#[cfg(test)]
+entry_point!(test_kernel_main);
 
 fn kernel_main(boot_info: &'static mut BootInfo) -> ! {
     let framebuffer = boot_info.framebuffer.as_mut().unwrap();
@@ -38,6 +45,21 @@ fn kernel_main(boot_info: &'static mut BootInfo) -> ! {
     // for byte in framebuffer.buffer_mut() {
     //     *byte = 0x88;
     // }
+
+
     loop {}
 }
 
+#[cfg(test)]
+fn test_runner(tests: &[&dyn Fn()]) {
+    println!("Running {} tests", tests.len());
+    for test in tests {
+        test();
+    }
+}
+
+#[cfg(test)]
+fn test_kernel_main() {
+    init();
+    test_main();
+}
