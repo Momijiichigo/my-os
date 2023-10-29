@@ -14,6 +14,4 @@ pub(crate) fn init_logger(buffer: &'static mut [u8], info: FrameBufferInfo) {
     log::set_logger(logger).expect("Logger already set");
 
     log::set_max_level(log::LevelFilter::Trace);
-
-    log::info!("Hello, Kernel Mode!");
 }
